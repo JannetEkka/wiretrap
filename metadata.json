@@ -1,0 +1,8 @@
+{
+  "name": "Wiretrap",
+  "description": "AI agent security testing and adversarial attack workbench",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

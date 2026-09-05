@@ -1,0 +1,112 @@
+{
+  "entities": {
+    "AgentTarget": {
+      "title": "AgentTarget",
+      "description": "Registered AI agent specification under red-team evaluation",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the owner who registered this target"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Human-readable label for the target agent"
+        },
+        "systemPrompt": {
+          "type": "string",
+          "maxLength": 32768,
+          "description": "Untrusted system prompt given to the target agent"
+        },
+        "tools": {
+          "type": "array",
+          "description": "List of decoy tool interfaces exposed to the target"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Unix timestamp of creation"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Unix timestamp of last modification"
+        }
+      },
+      "required": ["userId", "name", "systemPrompt", "tools", "createdAt", "updatedAt"]
+    },
+    "TargetChatMessage": {
+      "title": "TargetChatMessage",
+      "description": "Adversarial security auditor chat history for a target",
+      "type": "object",
+      "properties": {
+        "targetId": {
+          "type": "string",
+          "description": "ID of the parent agent target"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"],
+          "description": "Message author"
+        },
+        "content": {
+          "type": "string",
+          "description": "Message transcript content"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Unix timestamp of message creation"
+        },
+        "modelUsed": {
+          "type": "string",
+          "description": "Gemini model variant utilized for the analysis"
+        }
+      },
+      "required": ["targetId", "role", "content", "createdAt"]
+    },
+    "TargetRun": {
+      "title": "TargetRun",
+      "description": "Detonation run record for dynamic attack simulation",
+      "type": "object",
+      "properties": {
+        "targetId": {
+          "type": "string",
+          "description": "ID of the parent agent target"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "running", "completed", "failed"],
+          "description": "Run execution status"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Unix timestamp of run creation"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Unix timestamp of last update"
+        }
+      },
+      "required": ["targetId", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/targets/{targetId}": {
+      "schema": {
+        "$ref": "#/entities/AgentTarget"
+      },
+      "description": "User-owned agent targets under security review"
+    },
+    "/users/{userId}/targets/{targetId}/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/TargetChatMessage"
+      },
+      "description": "Security audit chat history associated with a target"
+    },
+    "/users/{userId}/targets/{targetId}/runs/{runId}": {
+      "schema": {
+        "$ref": "#/entities/TargetRun"
+      },
+      "description": "Detonation and dynamic test runs for a target"
+    }
+  }
+}
