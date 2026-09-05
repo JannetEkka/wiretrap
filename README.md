@@ -4,7 +4,8 @@
 
 Wiretrap is an adversarial testing platform for AI agents. You submit an agent's system prompt and tool definitions; Wiretrap clones it against inert decoy tools, attacks it with a library of realistic adversarial payloads, and reports **which tools actually fired** — not whether the agent's reply sounded safe.
 
-Live: https://wiretrap-362300022631.us-west1.run.app
+Live: https://wiretrap.ai.studio
+Cloud Run: https://wiretrap-362300022631.us-west1.run.app  (service `wiretrap`, region `us-west1`, project `wire-trap-26`)
 
 ---
 
